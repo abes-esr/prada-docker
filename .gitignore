@@ -1,0 +1,9 @@
+images/prada-web/src/*
+volumes/*
+.project
+.env
+*.sql
+*.sql.tgz
+*.sql.gz
+*.dump
+docker-compose.override.yml

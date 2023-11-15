@@ -1,0 +1,24 @@
+#
+# adminer est un backoffice qui permet d'administrer la base postgresql
+#
+
+version: '3'
+
+services:
+
+  prada-db-adminer:
+    image: adminer:4.8.1
+    container_name: prada-db-adminer
+    restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
+    memswap_limit: ${MEM_LIMIT}
+    cpus: ${CPU_LIMIT}
+    ports:
+      - ${PRADA_ADMINER_HTTP_PORT}:8080
+    depends_on:
+      - prada-db
+    environment:
+      ADMINER_DEFAULT_SERVER: "prada-db"
+    logging:
+      driver: none # pas de log pour adminer pour ne pas polluer
+

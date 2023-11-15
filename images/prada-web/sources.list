@@ -1,0 +1,6 @@
+# surcharge le dépot debian stretch courant qui est dans l'image de pase
+# par le dépôt archives car le courant est obsolète et si on ne change rien 
+# on ne peut plus faire de apt install
+deb http://archive.debian.org/debian stretch main
+deb http://archive.debian.org/debian-security stretch/updates main
+

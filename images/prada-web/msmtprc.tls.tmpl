@@ -1,0 +1,20 @@
+# config msmtp pour envoyer des mails
+# logfile - : signifie qu'on affiche les logs sur stdout (log de docker)
+defaults
+
+account default
+tls on
+tls_starttls on
+tls_certcheck off
+protocol smtp
+auth on
+domain ${SMTP_MAILDOMAIN}
+maildomain ${SMTP_MAILDOMAIN}
+host ${SMTP_HOST}
+port ${SMTP_PORT}
+user ${SMTP_USER}
+password ${SMTP_PASSWORD}
+auto_from on
+
+#logfile /var/log/msmtp.log
+logfile -

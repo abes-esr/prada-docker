@@ -1,0 +1,124 @@
+version: '3'
+
+services:
+
+  prada-web:
+    build: ./images/prada-web
+    image: prada-web:php-5.6.40-apache
+    container_name: prada-web
+    restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
+    memswap_limit: ${MEM_LIMIT}
+    cpus: ${CPU_LIMIT}
+    environment:
+      APPLI_ENV: ${PRADA_WEB_ENV:-test}
+      POSTGRES_HOST: prada-db
+      POSTGRES_DB: ${PRADA_DB_POSTGRES_DB}
+      POSTGRES_USER: ${PRADA_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${PRADA_DB_POSTGRES_PASSWORD}
+      SMTP_TLS: ${PRADA_WEB_SMTP_TLS:-off}
+      SMTP_HOST: ${PRADA_WEB_SMTP_HOST:-127.0.0.1}
+      SMTP_PORT: ${PRADA_WEB_SMTP_PORT:-25}
+      SMTP_MAILDOMAIN: ${PRADA_WEB_SMTP_MAILDOMAIN:-abes.fr}
+      SMTP_USER: ${PRADA_WEB_SMTP_USER}
+      SMTP_PASSWORD: ${PRADA_WEB_SMTP_PASSWORD}
+      LDAP_ADS_PROTOCOL: ${PRADA_WEB_LDAP_ADS_PROTOCOL}
+      LDAP_ADS_HOST: ${PRADA_WEB_LDAP_ADS_HOST}
+      LDAP_ADS_PORT: ${PRADA_WEB_LDAP_ADS_PORT}
+      LDAP_ADS_DOMAIN: ${PRADA_WEB_LDAP_ADS_DOMAIN}
+    ports:
+      - ${PRADA_WEB_HTTP_PORT}:80
+    depends_on:
+      - prada-db
+    volumes:
+      # pieces jointes des tickets Gala et ODM
+      - ./volumes/prada-web/files/:/var/lib/intranet/default/files/infolog/:rw
+      # fichier en rw nécessaire quand on ajoute/modifie une actualité (actualites.xml)
+      - ./volumes/prada-web/news_admin/actualites.xml:/var/www/html/egw/news_admin/actualites.xml:rw
+      # pour avoir les session PHP persistantes cf https://abes-esr.atlassian.net/browse/PRA-79
+      - ./volumes/prada-web/php-sessions/:/tmp/:rw
+    labels:
+      # pour remonter les logs dans le puits de log de l'Abes
+      # en suivant l'architecture https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/module=apache2"
+      - "co.elastic.logs/fileset.stdout=access"
+      - "co.elastic.logs/fileset.stderr=error"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=prada"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=Httpd"
+
+
+
+  prada-db:
+    # utilisation d'une vielle image de postgresql (8.2.23) pour éviter les warning et erreur de ce type dans Prada:
+    #   WARNING:  nonstandard use of \\ in a string literal at character 88
+    #   HINT:  Use the escape string syntax for backslashes, e.g., E'\\'.
+    #   ---
+    #   ERROR:  operator does not exist: character varying = integer at character 170
+    #   HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+    image: abesesr/postgres-fr_fr:8.2.23
+    container_name: prada-db
+    restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
+    memswap_limit: ${MEM_LIMIT}
+    cpus: ${CPU_LIMIT}
+    environment:
+      POSTGRES_DB: ${PRADA_DB_POSTGRES_DB}
+      POSTGRES_USER: ${PRADA_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${PRADA_DB_POSTGRES_PASSWORD}
+    volumes:
+      - ./volumes/prada-db/data/:/var/lib/postgresql/data/
+    labels:
+      # pour remonter les logs dans le puits de log de l'Abes
+      # en suivant l'architecture https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/module=postgresql"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=prada"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=Postgresql"
+
+
+
+
+  prada-db-dumper:
+    image: prodrigestivill/postgres-backup-local:13
+    container_name: prada-db-dumper
+    restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
+    memswap_limit: ${MEM_LIMIT}
+    cpus: ${CPU_LIMIT}
+    volumes:
+        - ./volumes/prada-db/dump/:/backups/
+    links:
+        - prada-db
+    depends_on:
+        - prada-db
+    environment:
+      POSTGRES_HOST: prada-db
+      POSTGRES_DB: ${PRADA_DB_POSTGRES_DB}
+      POSTGRES_USER: ${PRADA_DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${PRADA_DB_POSTGRES_PASSWORD}
+      POSTGRES_EXTRA_OPTS: "-Z6 --schema=public --blobs --clean"
+      SCHEDULE: "@daily"
+      # pour les tests =>
+      #SCHEDULE: "27 * * * * *"
+      TZ: "Europe/Paris"
+      BACKUP_KEEP_DAYS: 7
+      BACKUP_KEEP_WEEKS: 4
+      BACKUP_KEEP_MONTHS: 6
+      HEALTHCHECK_PORT: 8080
+    labels:
+      # pour remonter les logs dans le puits de log de l'Abes
+      # en suivant l'architecture https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=prada"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=adhoc"
+      # log multiline aussi pour ce conteneur avec des lignes qui ressemblent à ceci:
+      # 2021/08/13 15:24:42 15 cmd: /backup.sh
+      - "co.elastic.logs/multiline.type=pattern"
+      - "co.elastic.logs/multiline.pattern='^.*cmd: /backup.sh'"
+      - "co.elastic.logs/multiline.negate=true"
+      - "co.elastic.logs/multiline.match=after"
+

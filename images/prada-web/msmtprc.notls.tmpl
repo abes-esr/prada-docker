@@ -1,0 +1,12 @@
+# config msmtp pour envoyer des mails depuis php (parametre sendmail_path)
+# logfile - : signifie qu'on affiche les logs sur stdout (log de docker)
+defaults
+ 
+account default
+host ${SMTP_HOST}
+port ${SMTP_PORT}
+#logfile /var/log/msmtp.log
+logfile -
+
+auto_from on
+maildomain ${SMTP_MAILDOMAIN}
