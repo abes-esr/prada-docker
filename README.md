@@ -227,8 +227,9 @@ Explications des `docker-compose.*.yml` :
   - http://diplotaxis3-test.v202.abes.fr:9081/
   - http://diplotaxis3-prod.v102.abes.fr:9081/
 
-
-[![](https://docs.google.com/drawings/d/e/2PACX-1vSMEDW-9Kc0WKtI0FsWn8kx17ChIYKYezp0WZuAI9yUEgeBuln_B-3vsgjlVWNzj_oZka1kcfo68Eil/pub?w=932&amp;h=404)](https://docs.google.com/drawings/d/1HuEx83MctG80V9QDKHGSGNrlyq95Ezi3S1SBqXNMmxo/edit?usp=sharing)
+Schéma d'architecture :
+![](https://docs.google.com/drawings/d/e/2PACX-1vSMEDW-9Kc0WKtI0FsWn8kx17ChIYKYezp0WZuAI9yUEgeBuln_B-3vsgjlVWNzj_oZka1kcfo68Eil/pub?w=932&amp;h=404)  
+([cliquer ici](https://docs.google.com/drawings/d/1HuEx83MctG80V9QDKHGSGNrlyq95Ezi3S1SBqXNMmxo/edit?usp=sharing) pour modifier le schéma)
 
 Voir aussi la cartographie de l’application ici : http://urbanisation.abes.fr/web/866d6ca5/views/85519813.html (accès interne Abes)
 
