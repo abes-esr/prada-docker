@@ -213,7 +213,7 @@ L'application est répartie sur trois conteneurs :
   - `volumes/prada-web/egw/` : volume où on y retrouve le code source PHP de prada (egroupware)
   - `volumes/prada-web/files/` : volume où on y retrouve les pièces jointes des tickets Gala, des ODM et du calendrier
 - `prada-db` : la base de données postgresql de prada
-  - `volumes/prada-db/pgsql/` : les données binaires de postgresql
+  - `volumes/prada-db/data/` : les données binaires de postgresql
 - `prada-db-dumper` : pour le backup journalier de la base de données
   - `volumes/prada-db/dump/` : l'emplacement des fichiers des dumps journaliers
 
