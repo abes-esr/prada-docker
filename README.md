@@ -148,6 +148,11 @@ Les éléments importants à sauvegarder sur le système de fichier sont :
       └── db_intranet-______.sql.gz
   ```
 
+
+Les chemins volumineux à d'exclure des sauvegardes sont les suivants :
+- ``/opt/pod/prada-docker/volumes/prada-db/data/*`` : car il contient les données binaires de la base de données postgresql
+
+
 Pour restaurer la BDD depuis un dump, on procède comme ci-dessous :
 ```bash
 
