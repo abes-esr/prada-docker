@@ -13,8 +13,6 @@ services:
       SMTP_HOST: "prada-mailhog"
       SMTP_PORT: "1025"
       SMTP_MAILDOMAIN: "abes.fr"
-    depends_on:
-      - prada-mailhog
 
   # un serveur SMTP fictif permettant de debugguer les emails envoyés
   prada-mailhog:
