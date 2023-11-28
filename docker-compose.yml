@@ -28,6 +28,8 @@ services:
       LDAP_ADS_DOMAIN: ${PRADA_WEB_LDAP_ADS_DOMAIN}
     ports:
       - ${PRADA_WEB_HTTP_PORT}:80
+      # 20231128: SGY port a retirer une fois la bascule realisee sur le reverse proxy
+      - 9080:80
     depends_on:
       - prada-db
     volumes:
