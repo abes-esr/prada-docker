@@ -25,7 +25,5 @@ services:
       MH_SMTP_BIND_ADDR: "0.0.0.0:1025" # cf https://github.com/mailhog/MailHog/blob/master/docs/CONFIG.md
     ports:
       - ${PRADA_MAILHOG_HTTP_PORT}:8025
-      # 20231128: SGY port a retirer une fois la bascule realisee sur le reverse proxy
-      - 9025:8025
     logging:
       driver: none # pas de log pour mailhog pour ne pas polluer le debug

@@ -15,8 +15,6 @@ services:
     cpus: ${CPU_LIMIT}
     ports:
       - ${PRADA_ADMINER_HTTP_PORT}:8080
-      # 20231128: SGY port a retirer une fois la bascule realisee sur le reverse proxy
-      - 9081:80
     environment:
       ADMINER_DEFAULT_SERVER: "prada-db"
     logging:
