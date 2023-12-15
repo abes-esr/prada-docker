@@ -87,7 +87,7 @@ Enfin en local, dev et test, il est nécessaire de paramétrer les URLs de l'app
 
 ```bash
 cd /opt/pod/prada-docker/
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 Prada de test est alors accessible ici :
@@ -102,7 +102,6 @@ Mailhog est alors accessible ici :
 Adminer est alors accessible ici :
   - http://127.0.0.1:9081/
   - http://diplotaxis3-test.v202.abes.fr:9081/
-
 
 ## Arrêt, redémarrage et logs de l'application
 
@@ -128,6 +127,21 @@ docker-compose ps
 # consulter les logs
 docker-compose logs -f --tail=100
 ```
+
+
+## Mise à jour de l'application
+
+Dans le cas où une nouvelle version (modification du code) doit être déployé, il est nécessaire de procéder comme ceci :
+- modifier le code source et le commiter/pusher sur le gitlab qui héberge les source de prada (code privé)
+- se positionner sur le serveur de déploiement et taper ceci :
+  ```bash
+  # mettre à jour le code source avec les dernières modifications
+  cd /opt/pod/prada-docker/images/prada-web/src/
+  git pull
+  # rebuilder et redéployer l'application
+  cd /opt/pod/prada-docker/
+  docker compose up --build -d
+  ```
 
 ## Sauvegarde et restauration de l'application
 
