@@ -34,14 +34,14 @@ git clone https://git.abes.fr/depots/prada.git ./images/prada-web/src/
 
 # construction de l'image docker local spécifique de Prada avec le code source local
 # (étape facultatif car cette image est automatiquement construite au démarrage si elle ne l'a pas déjà été)
-docker-compose build
+docker compose build
 
 # indiquez les mots de passes souhaités et les différents paramètres
 # en personnalisant le contenu de .env (ex: mot de passes mysql et param smtp)
 cp .env-dist .env
 
 # import du dump de la bdd depuis les dernières sauvegardes
-docker-compose up -d prada-db
+docker compose up -d prada-db
 DUMP_PATH=$(ssh sotora ls -dt1 /backup_pool/diplotaxis3-prod/daily.0/racine/opt/pod/prada-docker/volumes/prada-db/dump/daily/db_intranet-2* | head -1)
 rsync -rav sotora:$DUMP_PATH .
 zcat $(basename $DUMP_PATH) \
@@ -87,7 +87,7 @@ Enfin en local, dev et test, il est nécessaire de paramétrer les URLs de l'app
 
 ```bash
 cd /opt/pod/prada-docker/
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 Prada de test est alors accessible ici :
@@ -109,13 +109,13 @@ Adminer est alors accessible ici :
 cd /opt/pod/prada-docker/
 
 # arrêt
-docker-compose stop
+docker compose stop
 
 # redémarrage
-docker-compose restart
+docker compose restart
 
 # vérifier que l'appli fonctionne au niveau docker
-docker-compose ps
+docker compose ps
 
 #Exemple de retour :
 #Name              Command                          State          Ports
@@ -125,7 +125,7 @@ docker-compose ps
 #prada-web         /docker-entrypoint.overloa ...   Up             0.0.0.0:9080->80/tcp,:::9080->80/tcp
 
 # consulter les logs
-docker-compose logs -f --tail=100
+docker compose logs -f --tail=100
 ```
 
 
@@ -172,7 +172,7 @@ Pour restaurer la BDD depuis un dump, on procède comme ci-dessous :
 
 # restaurer la base de données depuis un dump venant du serveur de sauvegarde
 cd /opt/pod/prada-docker/
-docker-compose up -d prada-db
+docker compose up -d prada-db
 DUMP_PATH=$(ssh sotora ls -dt1 /backup_pool/diplotaxis3-prod/daily.0/racine/opt/pod/prada-docker/volumes/prada-db/dump/daily/db_intranet-2* | head -1)
 rsync -rav sotora:$DUMP_PATH .
 zcat $(basename $DUMP_PATH) \
