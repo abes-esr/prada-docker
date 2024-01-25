@@ -91,17 +91,17 @@ docker compose up --build -d
 ```
 
 Prada de test est alors accessible ici :
-  - http://127.0.0.1:9080/
-  - http://diplotaxis3-test.v202.abes.fr:9080/
+  - http://127.0.0.1:10320/
+  - http://diplotaxis3-test.v202.abes.fr:10320/
   - https://intranet-test.abes.fr/
 
 Mailhog est alors accessible ici :
-  - http://127.0.0.1:9025/
-  - http://diplotaxis3-test.v202.abes.fr:9025/
+  - http://127.0.0.1:10321/
+  - http://diplotaxis3-test.v202.abes.fr:10321/
 
 Adminer est alors accessible ici :
-  - http://127.0.0.1:9081/
-  - http://diplotaxis3-test.v202.abes.fr:9081/
+  - http://127.0.0.1:10322/
+  - http://diplotaxis3-test.v202.abes.fr:10322/
 
 ## Arrêt, redémarrage et logs de l'application
 
@@ -122,7 +122,7 @@ docker compose ps
 #------------------------------------------------------------------------------------------------------
 #prada-db          docker-entrypoint.sh postgres    Up             5432/tcp
 #prada-db-dumper   /bin/sh -c exec /usr/local ...   Up (healthy)   5432/tcp
-#prada-web         /docker-entrypoint.overloa ...   Up             0.0.0.0:9080->80/tcp,:::9080->80/tcp
+#prada-web         /docker-entrypoint.overloa ...   Up             0.0.0.0:10320->80/tcp,:::10320->80/tcp
 
 # consulter les logs
 docker compose logs -f --tail=100
@@ -240,11 +240,11 @@ L'application est répartie sur trois conteneurs :
 Explications des `docker-compose.*.yml` :
 - `docker-compose.yml`: permet de lancer tous les conteneurs vitaux pour faire fonctionner prada (prada-web, prada-db, prada-db-dumper)
 - `docker-compose.mailhog.yml` (pour le debug): permet de lancer un serveur SMTP fictif qui va intercepter tous les mails envoyés par l'application et propose une interface pour les visualiser :
-  - http://diplotaxis3-test.v202.abes.fr:9025/
-  - http://diplotaxis3-prod.v102.abes.fr:9025/
+  - http://diplotaxis3-test.v202.abes.fr:10321/
+  - http://diplotaxis3-prod.v102.abes.fr:10321/
 - `docker-compose.adminer.yml` (pour le debug): permet de lancer [Adminer](https://www.adminer.org/) qui est une interface d'administration de base de données. Consultable sur le port 9025 ce qui donne ces URL sur les serveurs de déploiement :
-  - http://diplotaxis3-test.v202.abes.fr:9081/
-  - http://diplotaxis3-prod.v102.abes.fr:9081/
+  - http://diplotaxis3-test.v202.abes.fr:10322/
+  - http://diplotaxis3-prod.v102.abes.fr:10322/
 
 Schéma d'architecture :
 ![](https://docs.google.com/drawings/d/e/2PACX-1vSMEDW-9Kc0WKtI0FsWn8kx17ChIYKYezp0WZuAI9yUEgeBuln_B-3vsgjlVWNzj_oZka1kcfo68Eil/pub?w=932&amp;h=404)  
