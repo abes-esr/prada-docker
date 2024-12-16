@@ -252,3 +252,7 @@ Schéma d'architecture :
 
 Voir aussi la cartographie de l’application ici : http://urbanisation.abes.fr/web/866d6ca5/views/85519813.html (accès interne Abes)
 
+## Autre procédures
+
+[Ci-dessous le lien vers notre documentation interne](https://abesfr.sharepoint.com/:w:/r/sites/Bouda/AppliSupport/Prada/Documentation/PRADA_Procedures_pour_le_maintien_en_conditions_operationnelles.docx?d=w0fb1837cd8d7418782f89c17d6a71492&csf=1&web=1&e=u4kk0h) permettant de débloquer certaines situation non prévue dans les fonctionnalités de Prada (ex: ajouter un lien dans la homepage).
+
