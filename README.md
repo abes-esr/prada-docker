@@ -128,6 +128,24 @@ docker compose ps
 docker compose logs -f --tail=100
 ```
 
+## Debug
+
+Parfois il peut être nécessaire de debugger l'application en production, par exemple en allant regarder les données dans la base de données.
+Pour cela il est nécessaire de démarrer le conteneur ``prada-db-adminer`` en production de cette manière : 
+
+```bash
+cd /opt/pod/prada-docker/
+docker compose -f docker-compose.yml -f docker-compose.adminer.yml up -d
+```
+Cela aura pour effet de démarrer le logiciel "adminer" qui propose une interface web pour administrer la base de données, en plus de tous les autres conteneurs.
+Une fois démarré, pour y accéder, il suffit de se connecter sur cette URL :  
+http://diplotaxis3-prod.v102.abes.fr:10322/
+
+Une fois le travail de debug terminé, pour supprimer le conteneur ``prada-db-adminer`` :
+```bash
+cd /opt/pod/prada-docker/
+docker compose -f docker-compose.yml -f docker-compose.adminer.yml down prada-db-adminer
+```
 
 ## Mise à jour de l'application
 
