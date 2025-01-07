@@ -141,6 +141,10 @@ Cela aura pour effet de démarrer le logiciel "adminer" qui propose une interfac
 Une fois démarré, pour y accéder, il suffit de se connecter sur cette URL :  
 http://diplotaxis3-prod.v102.abes.fr:10322/
 
+Voici ensuite les paramètres à indiquer (le mot de passe à utiliser est dans le fichier ``/opt/pod/prada-docker/.env``) :
+![image](https://github.com/user-attachments/assets/e8018f30-47c5-4214-881f-a95671a24fb5)
+
+
 Une fois le travail de debug terminé, pour supprimer le conteneur ``prada-db-adminer`` :
 ```bash
 cd /opt/pod/prada-docker/
