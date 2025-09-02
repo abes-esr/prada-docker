@@ -11,13 +11,13 @@ COPY ./sources.list /etc/apt/sources.list
 RUN set -x \
     && DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
-    && apt-get install -y vim \
-    && apt-get install -y msmtp gettext-base \
-    && apt-get install -y libldap2-dev libldb-dev \
-    && apt-get install -y libpng-dev \
-    && apt-get install -y libpq-dev \
-    && apt-get install -y libxml2-dev \
-    && apt-get install -y wait-for-it
+    && apt-get install -y --allow-unauthenticated vim \
+    && apt-get install -y --allow-unauthenticated msmtp gettext-base \
+    && apt-get install -y --allow-unauthenticated libldap2-dev libldb-dev \
+    && apt-get install -y --allow-unauthenticated libpng-dev \
+    && apt-get install -y --allow-unauthenticated libpq-dev \
+    && apt-get install -y --allow-unauthenticated libxml2-dev \
+    && apt-get install -y --allow-unauthenticated wait-for-it
 
 # client postgresql pour le système de configuration depuis docker vers la table egw_config
 # cf https://stackoverflow.com/a/52655008
