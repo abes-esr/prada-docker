@@ -128,6 +128,18 @@ docker compose ps
 docker compose logs -f --tail=100
 ```
 
+## Mise à jour de Prada
+
+Pour mettre à jour Prada (une fois qu'une modification dans le code php ou dans le paramétrage docker a été poussé sur le/les dépôts), voici comment procéder en suposant qu'une instance de prada anterieure tourne sur le serveur ici `/opt/pod/prada-docker/` :
+
+```bash
+cd /opt/pod/prada-docker/
+git pull
+# <- à cette étape, modifiez si nécessaire les variables du .env dans le cas où vous observez que .env-dist a été mis à jour
+git submodule update
+docker compose up -d --build
+```
+
 ## Debug
 
 Parfois il peut être nécessaire de debugger l'application en production, par exemple en allant regarder les données dans la base de données.
