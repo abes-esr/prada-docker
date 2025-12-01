@@ -32,13 +32,13 @@ chmod -R 777 /opt/pod/prada-docker/volumes/* # pour que les conteneurs puissent 
 cd /opt/pod/prada-docker/
 git clone https://git.abes.fr/depots/prada.git ./images/prada-web/src/
 
-# construction de l'image docker local spécifique de Prada avec le code source local
-# (étape facultatif car cette image est automatiquement construite au démarrage si elle ne l'a pas déjà été)
-docker compose build
-
 # indiquez les mots de passes souhaités et les différents paramètres
 # en personnalisant le contenu de .env (ex: mot de passes mysql et param smtp)
 cp .env-dist .env
+
+# construction de l'image docker local spécifique de Prada avec le code source local
+# (étape facultatif car cette image est automatiquement construite au démarrage si elle ne l'a pas déjà été)
+docker compose build
 
 # import du dump de la bdd depuis les dernières sauvegardes
 docker compose up -d prada-db
