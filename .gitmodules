@@ -1,0 +1,4 @@
+[submodule "images/prada-web/src"]
+  path = images/prada-web/src
+  url = https://git.abes.fr/depots/prada
+  update = merge
